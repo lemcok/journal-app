@@ -17,7 +17,7 @@ import { types } from "../types/types";
 
 const initialState = {
     notes: [],
-    active: null,
+    active: null, 
 }
 
 export const notesReducer = ( state = initialState, action ) => {
