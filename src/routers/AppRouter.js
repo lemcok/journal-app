@@ -8,30 +8,26 @@ import { AuthRouter } from './AuthRouter'
 import { login } from '../actions/auth';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
-
+import { startLoadingNotes } from '../actions/notes';
 
 export const AppRouter = () => {
 
     const dispatch = useDispatch();
-
-    const [checking, setChecking] = useState(true);
+    const [checking, setChecking] = useState( true );
     const [IsLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        
-        firebase.auth().onAuthStateChanged( (user) => { //este va retornar un observable //si no esta autenticado el (user) va regresar un Null
+        firebase.auth().onAuthStateChanged( async(user) => { //este va retornar un observable //si no esta autenticado el (user) va regresar un Null
             //**el obserable va estar pendiente de los cambios de la auth y se va ejecutar de nuevo el callback */
             if ( user?.uid ) { //si el user? tiene algo entonces pregunta si tiene el uid
                 dispatch( login( user.uid, user.displayName ) );
-
                 setIsLoggedIn( true );
-
+                dispatch( startLoadingNotes( user.uid ) )
             }else {
                 setIsLoggedIn( false );
             }
 
             setChecking( false );
-
         } )   
 
     }, [ dispatch, setChecking, setIsLoggedIn ])
@@ -46,7 +42,6 @@ export const AppRouter = () => {
         <Router>
             <div>
                 <Switch>
-
                     <PublicRoute
                         path="/auth" 
                         component={ AuthRouter }
@@ -58,9 +53,7 @@ export const AppRouter = () => {
                         path="/" 
                         component={ JournalScreen } 
                     />
-
                     <Redirect to="/auth/login" />
-
                 </Switch>
             </div>
         </Router>

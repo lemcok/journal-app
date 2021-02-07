@@ -8,20 +8,16 @@ import { useForm } from '../../hooks/useForm';
 export const LoginScreen = () => {
 
     const dispatch = useDispatch();
-
     const { loading } = useSelector(state => state.ui);
-
     const [ formValues, handleInputChange ] = useForm({ 
         email: 'carmenfm@example.com',
         password: '123456'
     });
 
-
     const { email, password } = formValues;
 
     const handleLogin = (e) => {
         e.preventDefault();
-
         dispatch( startLoginEmailPassword( email, password ));
     };
 
@@ -33,7 +29,6 @@ export const LoginScreen = () => {
     return (
         <>
             <h3 className="auth__title">Login</h3>
-
             <form onSubmit={ handleLogin } >
                 <input 
                     type="text"
