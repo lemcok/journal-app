@@ -4,6 +4,7 @@ import { types } from '../types/types';
 import { firebase, googleAuthProvider } from '../firebase/firebase-config';
 
 import { finishLoading, startLoading } from './ui';
+import { notesCleaning } from './notes';
 
 export const startLoginEmailPassword = (email, password) => {
     //puedes hacer varios dispatch simultaniamente aqui
@@ -76,10 +77,12 @@ export const startLogout = () => {
         await firebase.auth().signOut();
 
         dispatch( logout() );
+        dispatch( notesCleaning() )
     }
 }
 
 export const logout = () => ({
     type: types.logout   
 })
+
 

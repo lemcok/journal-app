@@ -21,7 +21,6 @@ export const Sidebar = () => {
         dispatch( startNewNote() );
     }
     
-    
 
     return (
         <aside className="journal__sidebar">
